@@ -35,7 +35,6 @@ final class CryptocurrencyPricelistViewModel: CryptocurrencyPricelistViewModelPr
     }
     
     func getCryptocurrencyPricelist() {
-        //        self.cryptoCurrencyPricelist = [CryptocurrencyMockedData.cryptocurrencyMockedData, CryptocurrencyMockedData.cryptocurrencyMockedData, CryptocurrencyMockedData.cryptocurrencyMockedData, CryptocurrencyMockedData.cryptocurrencyMockedData, CryptocurrencyMockedData.cryptocurrencyMockedData]
         isloading = true
         networkManager.getCryptocurrencyPriceList().receive(on: DispatchQueue.main).sink {[weak self] completionValue in
             switch completionValue {
@@ -52,7 +51,6 @@ final class CryptocurrencyPricelistViewModel: CryptocurrencyPricelistViewModelPr
         } receiveValue: {[weak self] value in
             self?.cryptoCurrencyPricelist = value
             self?.tempCyptoCurrencyPricelist = value
-            
             self?.isloading = false
         }.store(in: &disposables)
     }
@@ -75,9 +73,11 @@ final class CryptocurrencyPricelistViewModel: CryptocurrencyPricelistViewModelPr
             .sink {[weak self] searchText in
                 if (searchText.isEmpty) {
                     print("search closed")
+                    self?.startAutoRefresh()
                     self?.cryptoCurrencyPricelist = self?.tempCyptoCurrencyPricelist ?? []
                     return
                 }
+                self?.stopAutoRefresh()
                 self?.searchForCryptocurrency(searchText: searchText)
             }.store(in: &disposables)
     }

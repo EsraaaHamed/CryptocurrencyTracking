@@ -57,7 +57,7 @@ struct CryptocurrencyListViewCell: View {
     }
 }
 
-struct CryptocurrencyListViewCell_Previews: PreviewProvider {
-    static var previews: some View { CryptocurrencyListViewCell(cryptocurrency: CryptocurrencyMockedData.cryptocurrencyMockedData).environmentObject(FavoriteCryptocurrencies())
-    }
-}
+//struct CryptocurrencyListViewCell_Previews: PreviewProvider {
+//    static var previews: some View { CryptocurrencyListViewCell(cryptocurrency: CryptocurrencyMockedData.cryptocurrencyMockedData).environmentObject(FavoriteCryptocurrencies())
+//    }
+//}

@@ -44,14 +44,5 @@ class FavoriteCryptocurrencies: ObservableObject {
         }
     }
     
-//    func cacheFavorites() {
-//        DispatchQueue.global(qos: .background).async { [weak self] in
-//            let encoder = JSONEncoder()
-//            if let encoded = try? encoder.encode(self?.favoriteCryptocurrencies) {
-//                UserDefaults.standard.set(encoded, forKey: "favoriteCryptocurrencies")
-//            }
-//        }
-//    }
-    
     
 }

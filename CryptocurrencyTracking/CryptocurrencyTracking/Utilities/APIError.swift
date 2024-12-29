@@ -10,7 +10,7 @@ enum APIError: String, Error  {
     
     case invalidResponseError = "Invalid response from server"
     case invalidUrlError = "The url used is invalid or not supported"
-    case networkError = "Network error occurred"
+    case responseWithError = "The response contains an error"
     case parsingError = "Couldn't parse the response from server"
     case testingError = "Testing error occurred"
     case unKnownError = ""

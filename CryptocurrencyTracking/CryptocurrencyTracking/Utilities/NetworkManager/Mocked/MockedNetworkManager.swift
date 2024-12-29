@@ -12,7 +12,6 @@ class MockedNetworkManager: NetworkManager {
     let decoder = JSONDecoder()
     init(isSuccessful: Bool) {
         self.isSuccessful = isSuccessful
-        self.decoder.keyDecodingStrategy = .convertFromSnakeCase
         super.init()
     }
     

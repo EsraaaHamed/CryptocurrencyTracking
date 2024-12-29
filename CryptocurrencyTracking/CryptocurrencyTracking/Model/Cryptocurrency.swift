@@ -14,27 +14,19 @@ struct Cryptocurrency: Codable, Identifiable, Equatable {
     let image: URL
     let currentPrice: Double
     let marketCap: Double
-//    let marketCapRank: Double
-//    let fullyDilutedValuation: Double?
-//    let totalVolume: Double
-//    let high24h: Double?
-//    let low24h: Double?
     let priceChange24h: Double?
     let priceChangePercentage24h: Double?
-//    let marketCapChange24h: Double?
-//    let marketCapChangePercentage24h: Double?
-//    let circulatingSupply: Double?
-//    let totalSupply: Double?
-//    let maxSupply: Double?
-//    let ath: Double?
-//    let athChangePercentage: Double?
-//    let athDate: String
-//    let atl: Double
-//    let atlChangePercentage: Double?
-//    let atlDate: String?
-//    let roi: String?
-//    let lastUpdated: String?
 
+    enum CodingKeys: String, CodingKey {
+           case id
+           case symbol
+           case name
+           case image
+           case currentPrice = "current_price"
+           case marketCap = "market_cap"
+           case priceChange24h = "price_change_24h"
+           case priceChangePercentage24h = "price_change_percentage_24h"
+       }
 }
 
 struct CryptocurrencyMockedData {

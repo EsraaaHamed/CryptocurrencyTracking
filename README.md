@@ -9,9 +9,9 @@ This app is for tracking real-time prices, manage their favorites, and navigate 
 
 
 ## Features
-- Real-Time Prices: Stay updated with the latest cryptocurrency prices with autorefresh every 30 seconds
+- Real-Time Prices: Stay updated with the latest cryptocurrency prices, with auto-refresh every 30 seconds.
 - Search Cryptocurrencies: Quickly find any cryptocurrency by name or symbol.
-- Favorites Management: Save and organize your favorite cryptocurrencies.
+- Favorites Management: Save and organize your favorite cryptocurrencies for easy access.
 - Details Screen: Navigate to a detailed view of each selected currency.
 - Error Handling: Provides user-friendly error messages for API errors.
 

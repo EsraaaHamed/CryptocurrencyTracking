@@ -14,7 +14,12 @@ class CryptocurrencyDetailsViewModelTests: XCTestCase {
     var disposables = Set<AnyCancellable>()
 
     func testGetCoinImage() throws {
-        let viewModel = CryptocurrencyDetailsViewModel(cryptocurrency: Cryptocurrency(id: "bitcoin", symbol: "btc", name: "Bitcoin", image: URL(string:"https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1696501400")!, currentPrice: 70187, marketCap: 1381651251183, priceChange24h: 2126.88, priceChangePercentage24h: 3.12502), networkManager: MockedNetworkManager(isSuccessful: true))
+        guard let imageUrl = URL(string:"https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1696501400") else {
+            XCTFail("Invalid image url")
+            return
+        }
+        
+        let viewModel = CryptocurrencyDetailsViewModel(cryptocurrency: Cryptocurrency(id: "bitcoin", symbol: "btc", name: "Bitcoin", image: imageUrl, currentPrice: 70187, marketCap: 1381651251183, priceChange24h: 2126.88, priceChangePercentage24h: 3.12502), networkManager: MockedNetworkManager(isSuccessful: true))
         let expectation = XCTestExpectation(description: "getCoinImage")
         viewModel.getCoinImage()
         
@@ -26,7 +31,11 @@ class CryptocurrencyDetailsViewModelTests: XCTestCase {
     }
     
     func testGetCoinImage_WithFailure() throws {
-        let viewModel = CryptocurrencyDetailsViewModel(cryptocurrency: Cryptocurrency(id: "bitcoin", symbol: "btc", name: "Bitcoin", image: URL(string:"https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1696501400")!, currentPrice: 70187, marketCap: 1381651251183, priceChange24h: 2126.88, priceChangePercentage24h: 3.12502), networkManager: MockedNetworkManager(isSuccessful: false))
+        guard let imageUrl = URL(string:"https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1696501400") else {
+            XCTFail("Invalid image url")
+            return
+        }
+        let viewModel = CryptocurrencyDetailsViewModel(cryptocurrency: Cryptocurrency(id: "bitcoin", symbol: "btc", name: "Bitcoin", image: imageUrl, currentPrice: 70187, marketCap: 1381651251183, priceChange24h: 2126.88, priceChangePercentage24h: 3.12502), networkManager: MockedNetworkManager(isSuccessful: false))
         let expectation = XCTestExpectation(description: "getCoinImage")
         viewModel.getCoinImage()
         

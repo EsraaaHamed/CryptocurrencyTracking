@@ -13,7 +13,7 @@ class NetworkManager {
     
     func getCryptocurrencyPriceList() ->  AnyPublisher<[Cryptocurrency], APIError>  {
         let urlComponents = self.getPriceListURLComponents()
-        guard let finalURL = urlComponents.url else {
+        guard let finalURL = urlComponents?.url else {
             print("Invalid URL")
             
             return Fail(error: APIError.invalidUrlError).eraseToAnyPublisher()
@@ -21,10 +21,9 @@ class NetworkManager {
         
         let priceListRequest = self.getURLRequest(url: finalURL)
         let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
         
         return URLSession.shared.dataTaskPublisher(for: priceListRequest).mapError{ error in
-            APIError.networkError
+            APIError.responseWithError
         }.tryMap { element -> Data in
             guard let response = element.response as? HTTPURLResponse,
                   response.statusCode == 200 else {
@@ -56,13 +55,13 @@ class NetworkManager {
                 CachingManager.shared.setCachedImage(element.data, forKey: imageUrl.absoluteString)
                 return element.data
             }.mapError { error in
-                APIError.networkError
+                APIError.responseWithError
             }.eraseToAnyPublisher()
     }
     
     func searchForCryptocurrency(serachText: String) -> AnyPublisher<Coins, APIError> {
         let urlComponents = self.getCryptocurrenciesSearchURLComponents(searchText: serachText)
-        guard let finalURL = urlComponents.url else {
+        guard let finalURL = urlComponents?.url else {
             print("Invalid URL")
             
             return Fail(error: APIError.invalidUrlError).eraseToAnyPublisher()
@@ -70,16 +69,14 @@ class NetworkManager {
         
         let searchRequest = self.getURLRequest(url: finalURL)
         let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
         
         return URLSession.shared.dataTaskPublisher(for: searchRequest).mapError{ error in
-            APIError.networkError
+            APIError.responseWithError
         }.tryMap { element -> Data in
             guard let response = element.response as? HTTPURLResponse,
                   response.statusCode == 200 else {
                 throw APIError.invalidResponseError
             }
-//            print(element.data)
             return element.data
         }.decode(type: Coins.self, decoder: decoder).mapError{
             error in
@@ -99,19 +96,19 @@ extension NetworkManager {
         return request
     }
     
-    func getPriceListURLComponents() -> URLComponents {
+    func getPriceListURLComponents() -> URLComponents? {
         let queryItem = [URLQueryItem(name: APIConstants.apiKeyHeaderKey, value: APIConstants.apiKeyValue), URLQueryItem(name: APIConstants.targetMarketQueryParamKey, value: APIConstants.targetMarketQueryParamValue)]
-        var urlComponents = URLComponents(string: (APIConstants.baseURL + APIConstants.getAllCoinsEndPoint))!
-            urlComponents.queryItems = queryItem
+        var urlComponents = URLComponents(string: (APIConstants.baseURL + APIConstants.getAllCoinsEndPoint))
+        urlComponents?.queryItems = queryItem
         
         return urlComponents
     }
     
-    func getCryptocurrenciesSearchURLComponents(searchText: String) -> URLComponents {
+    func getCryptocurrenciesSearchURLComponents(searchText: String) -> URLComponents? {
         let queryItem = [ URLQueryItem(name: "query", value: searchText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)?.lowercased() ?? "")]
         
-        var urlComponents = URLComponents(string: (APIConstants.baseURL + APIConstants.searchCoinsEndPoint))!
-            urlComponents.queryItems = queryItem
+        var urlComponents = URLComponents(string: (APIConstants.baseURL + APIConstants.searchCoinsEndPoint))
+            urlComponents?.queryItems = queryItem
         
         return urlComponents
     }
