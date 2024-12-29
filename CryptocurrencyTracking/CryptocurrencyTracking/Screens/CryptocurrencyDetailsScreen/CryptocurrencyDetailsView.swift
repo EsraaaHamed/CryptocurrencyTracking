@@ -88,7 +88,7 @@ struct CryptocurrencyDetailsView<Model>: View where Model: CryptocurrencyDetails
                 
             }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
             
-                .task {
+                .task() {
                     cryptocurrencyDetailsVM.getCoinImage()
                     
                 }

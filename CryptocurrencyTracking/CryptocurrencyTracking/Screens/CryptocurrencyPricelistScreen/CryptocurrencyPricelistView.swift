@@ -50,9 +50,11 @@ struct CryptocurrencyPricelistView<Model>: View where Model: CryptocurrencyPrice
                     }
                 }
             }.searchable(text: $cryptocurrencyPricelistVM.searchText, prompt: "search by name or symbol")
-        }.onAppear() {
-            cryptocurrencyPricelistVM.getCryptocurrencyPricelist()
-            cryptocurrencyPricelistVM.startAutoRefresh()
+        }.task() {
+            if cryptocurrencyPricelistVM.searchText.isEmpty {
+                cryptocurrencyPricelistVM.getCryptocurrencyPricelist()
+                cryptocurrencyPricelistVM.startAutoRefresh()
+            }
         }.onDisappear() {
             cryptocurrencyPricelistVM.stopAutoRefresh()
         }.alert(item: $cryptocurrencyPricelistVM.errorAlert) { error in
