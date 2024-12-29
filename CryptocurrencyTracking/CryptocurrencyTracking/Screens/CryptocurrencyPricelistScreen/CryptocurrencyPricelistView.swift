@@ -52,9 +52,9 @@ struct CryptocurrencyPricelistView<Model>: View where Model: CryptocurrencyPrice
             }.searchable(text: $cryptocurrencyPricelistVM.searchText, prompt: "search by name or symbol")
         }.onAppear() {
             cryptocurrencyPricelistVM.getCryptocurrencyPricelist()
-            //            cryptocurrencyPricelistVM.startAutoRefresh()
+            cryptocurrencyPricelistVM.startAutoRefresh()
         }.onDisappear() {
-            //            cryptocurrencyPricelistVM.stopAutoRefresh()
+            cryptocurrencyPricelistVM.stopAutoRefresh()
         }.alert(item: $cryptocurrencyPricelistVM.errorAlert) { error in
             Alert(title: Text("Error").foregroundColor(.red), message: Text("\(error.apiError.rawValue)"), dismissButton: Alert.Button.default(Text("OK")))
         }
